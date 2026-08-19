@@ -16,7 +16,7 @@ function renderSchedule() {
 
 function toggleDaySchedule() {
   dayScheduleCollapsed = !dayScheduleCollapsed;
-  localStorage.setItem('mow_day_schedule_collapsed_v1', dayScheduleCollapsed ? '1' : '0');
+  localStorage.setItem('asmow_open_day_schedule_collapsed_v1', dayScheduleCollapsed ? '1' : '0');
   applyDayScheduleState();
 }
 

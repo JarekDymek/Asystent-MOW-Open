@@ -16,7 +16,7 @@ function renderLaws() {
   renderLegalUpdateSnapshot(loadLegalUpdateSnapshot());
 }
 
-const LEGAL_STATUS_STORE_KEY = 'mow_legal_status_v1';
+const LEGAL_STATUS_STORE_KEY = 'asmow_open_legal_status_v1';
 const LEGAL_STATUS_REFRESH_MS = 24 * 60 * 60 * 1000;
 let legalStatusBusy = false;
 

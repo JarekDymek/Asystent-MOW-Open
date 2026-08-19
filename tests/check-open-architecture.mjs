@@ -48,8 +48,11 @@ if (manifest.id !== './' || manifest.start_url !== './' || manifest.scope !== '.
 const db = read('assets/js/open-db.js');
 const backup = read('assets/js/backup.js');
 const sync = read('assets/js/device-sync.js');
-if (!db.includes("const DB_NAME = 'asmow-open-data'") || !db.includes('indexedDB.open(DB_NAME')) {
+if (!db.includes("const DB_NAME = 'asmow-open-data-v2'") || !db.includes('indexedDB.open(DB_NAME')) {
   throw new Error('Brak odrębnej bazy IndexedDB wersji Open.');
+}
+if (/migrateLegacyData|mow_chat_history_v2|mow_chat_draft_v2/.test(frontend)) {
+  throw new Error('Wersja Open nie może automatycznie przejmować historii ani danych prywatnego Asystenta.');
 }
 if (!backup.includes('AES-GCM') || !backup.includes('PBKDF2')) throw new Error('Kopia danych nie ma wymaganego szyfrowania.');
 if (!sync.includes('iceServers: []')) throw new Error('Synchronizacja powinna działać bez zewnętrznego STUN/TURN.');

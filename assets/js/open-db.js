@@ -1,6 +1,6 @@
 /* Local, device-owned database used by Asystent MOW Open. */
 (function () {
-  const DB_NAME = 'asmow-open-data';
+  const DB_NAME = 'asmow-open-data-v2';
   const DB_VERSION = 1;
   const RECORDS = 'records';
   const FILES = 'files';
@@ -287,41 +287,6 @@
     });
   }
 
-  async function migrateLegacyData() {
-    if (await getMeta('legacy-migration-v1', false)) return;
-    await migrateLegacyList('mow_current_info_v1', 'currentInfo');
-    await migrateLegacyList('mow_knowledge_base_v1', 'knowledge');
-    await migrateLegacyList('mow_notes_v2', 'note');
-    const weeklyRaw = localStorage.getItem('mow_weekly_plan_v1');
-    if (weeklyRaw) {
-      try {
-        const payload = JSON.parse(weeklyRaw);
-        await putRecord({ id: 'weekly-plan-current', type: 'weeklyPlan', payload, hash: await sha256(weeklyRaw) });
-      } catch {}
-    }
-    await setMeta('legacy-migration-v1', true);
-  }
-
-  async function migrateLegacyList(key, type) {
-    const raw = localStorage.getItem(key);
-    if (!raw) return;
-    try {
-      const items = JSON.parse(raw);
-      if (!Array.isArray(items)) return;
-      for (const item of items) {
-        const text = JSON.stringify(item);
-        await putRecord({
-          id: item.id ? String(item.id) : makeId(type),
-          type,
-          hash: await sha256(text),
-          createdAt: item.createdAt || item.updatedAt || new Date().toISOString(),
-          updatedAt: item.updatedAt || item.createdAt || new Date().toISOString(),
-          payload: item
-        });
-      }
-    } catch {}
-  }
-
   function arrayBufferToBase64(buffer) {
     const bytes = new Uint8Array(buffer);
     const chunks = [];
@@ -355,7 +320,6 @@
     search,
     sha256,
     clearAll,
-    migrateLegacyData,
     arrayBufferToBase64,
     base64ToUint8Array
   };

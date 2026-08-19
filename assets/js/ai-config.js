@@ -1,5 +1,6 @@
 /* Local assistant scope and chat state. */
-const CHAT_STORE_KEY = 'mow_chat_history_v2';
+const CHAT_STORE_KEY = 'asmow_open_chat_history_v1';
+const CHAT_META_KEY = 'open-chat-history-v1';
 let currentAIScope = 'general';
 
 function setAIContextScope(scope = 'general') {

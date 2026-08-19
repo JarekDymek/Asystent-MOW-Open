@@ -48,7 +48,7 @@ async function clearLocalDeviceData() {
   if (!confirm('Usunąć wiadomości, pliki, harmonogramy, notatki i lokalną bazę wiedzy z tego urządzenia?')) return;
   if (!confirm('Bez zaszyfrowanej kopii tej operacji nie można cofnąć. Kontynuować?')) return;
   await OpenData.clearAll();
-  ['asmow_open_educator', CHAT_DRAFT_KEY, 'mow_day_schedule_collapsed_v1', LEGAL_STATUS_STORE_KEY].forEach(key => localStorage.removeItem(key));
+  ['asmow_open_educator', CHAT_DRAFT_KEY, 'asmow_open_day_schedule_collapsed_v1', LEGAL_STATUS_STORE_KEY].forEach(key => localStorage.removeItem(key));
   setBackupStatus('Dane lokalne usunięto. Odświeżam aplikację...');
   setTimeout(() => window.location.reload(), 500);
 }

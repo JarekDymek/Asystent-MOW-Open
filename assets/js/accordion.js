@@ -1,7 +1,7 @@
 /* ────────────────────────────────
    ACCORDIONS
 ──────────────────────────────── */
-const ACCORDION_KEY_PREFIX = 'mow_accordion_';
+const ACCORDION_KEY_PREFIX = 'asmow_open_accordion_';
 const ACCORDION_TILE_META = {
   'proc-crisis-card': { icon: '🚨', label: 'Sytuacje kryzysowe', tone: 'red' },
   'proc-safety-card': { icon: '🛡️', label: 'Bezpieczeństwo', tone: 'orange' },

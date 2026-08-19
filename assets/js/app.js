@@ -3,7 +3,6 @@
 ──────────────────────────────── */
 async function init() {
   await OpenData.open();
-  await OpenData.migrateLegacyData();
   renderSchedule();
   renderQuickGrid();
   renderProcs();

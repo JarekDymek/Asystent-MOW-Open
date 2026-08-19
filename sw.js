@@ -1,4 +1,4 @@
-const CACHE = 'asmow-open-v9';
+const CACHE = 'asmow-open-v10';
 const APP_SHELL = [
   './',
   './index.html',

@@ -17,8 +17,8 @@ function chatKeydown(e) {
 async function clearChat() {
   if (!confirm('Wyczyścić historię rozmowy asystenta na tym urządzeniu?')) return;
   chatHistory = [];
-  localStorage.removeItem('mow_chat_history_v2');
-  await OpenData.setMeta('chat-history', []);
+  localStorage.removeItem(CHAT_STORE_KEY);
+  await OpenData.setMeta(CHAT_META_KEY, []);
   localStorage.removeItem(CHAT_DRAFT_KEY);
   const win = document.getElementById('chat-window');
   win.innerHTML = '<div class="msg ai">Historia wyczyszczona. Zadaj nowe pytanie!</div>';
@@ -101,7 +101,7 @@ function setupWorkSafeguards() {
 
 async function loadChatHistory() {
   try {
-    const stored = await OpenData.getMeta('chat-history', null);
+    const stored = await OpenData.getMeta(CHAT_META_KEY, null);
     chatHistory = (Array.isArray(stored) ? stored : JSON.parse(localStorage.getItem(CHAT_STORE_KEY) || '[]'))
       .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
       .slice(-18);
@@ -116,7 +116,7 @@ async function loadChatHistory() {
 
 function saveChatHistory() {
   chatHistory = chatHistory.slice(-40);
-  OpenData.setMeta('chat-history', chatHistory).catch(() => {});
+  OpenData.setMeta(CHAT_META_KEY, chatHistory).catch(() => {});
 }
 
 function appendMsg(type, text, sources = []) {
