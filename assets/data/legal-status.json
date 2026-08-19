@@ -1,0 +1,209 @@
+{
+  "ok": true,
+  "checkedAt": "2026-08-19T19:23:29.552Z",
+  "source": "API ELI Sejmu RP - urzędowe metadane aktów prawnych",
+  "sourceDocumentation": "https://api.sejm.gov.pl/eli_pl.html",
+  "partial": false,
+  "errors": [],
+  "tracked": [
+    {
+      "eli": "DU/2026/163",
+      "displayAddress": "Dz.U. 2026 poz. 163",
+      "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 5 lutego 2026 r. w sprawie ogłoszenia jednolitego tekstu ustawy o wspieraniu i resocjalizacji nieletnich",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-02-17T09:52:31",
+      "promulgation": "2026-02-12",
+      "entryIntoForce": "",
+      "url": "https://eli.gov.pl/eli/DU/2026/163/ogl"
+    },
+    {
+      "eli": "DU/2023/651",
+      "displayAddress": "Dz.U. 2023 poz. 651",
+      "title": "Rozporządzenie Ministra Edukacji i Nauki z dnia 30 marca 2023 r. w sprawie niektórych publicznych placówek systemu oświaty",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2024-03-14T12:57:49",
+      "promulgation": "2023-04-05",
+      "entryIntoForce": "2023-04-06",
+      "url": "https://eli.gov.pl/eli/DU/2023/651/ogl"
+    },
+    {
+      "eli": "DU/2023/139",
+      "displayAddress": "Dz.U. 2023 poz. 139",
+      "title": "Rozporządzenie Ministra Sprawiedliwości z dnia 27 grudnia 2022 r. w sprawie komisji do spraw kierowania nieletnich do młodzieżowego ośrodka wychowawczego oraz trybu kierowania, przenoszenia i zwalniania nieletnich z młodzieżowych ośrodków wychowawczych",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2024-03-14T12:49:10",
+      "promulgation": "2023-01-18",
+      "entryIntoForce": "2023-01-19",
+      "url": "https://eli.gov.pl/eli/DU/2023/139/ogl"
+    },
+    {
+      "eli": "DU/2026/820",
+      "displayAddress": "Dz.U. 2026 poz. 820",
+      "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 12 czerwca 2026 r. w sprawie ogłoszenia jednolitego tekstu ustawy - Prawo oświatowe",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-08-19T13:38:25",
+      "promulgation": "2026-06-22",
+      "entryIntoForce": "",
+      "url": "https://eli.gov.pl/eli/DU/2026/820/ogl"
+    },
+    {
+      "eli": "DU/2026/515",
+      "displayAddress": "Dz.U. 2026 poz. 515",
+      "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 12 marca 2026 r. w sprawie ogłoszenia jednolitego tekstu ustawy - Karta Nauczyciela",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-04-15T10:27:54",
+      "promulgation": "2026-04-14",
+      "entryIntoForce": "",
+      "url": "https://eli.gov.pl/eli/DU/2026/515/ogl"
+    },
+    {
+      "eli": "DU/2025/277",
+      "displayAddress": "Dz.U. 2025 poz. 277",
+      "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 14 lutego 2025 r. w sprawie ogłoszenia jednolitego tekstu ustawy - Kodeks pracy",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-08-18T14:42:13",
+      "promulgation": "2025-03-06",
+      "entryIntoForce": "",
+      "url": "https://eli.gov.pl/eli/DU/2025/277/ogl"
+    },
+    {
+      "eli": "DU/2026/244",
+      "displayAddress": "Dz.U. 2026 poz. 244",
+      "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 20 lutego 2026 r. w sprawie ogłoszenia jednolitego tekstu ustawy o środkach przymusu bezpośredniego i broni palnej",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-07-07T13:48:28",
+      "promulgation": "2026-03-02",
+      "entryIntoForce": "",
+      "url": "https://eli.gov.pl/eli/DU/2026/244/ogl"
+    }
+  ],
+  "candidates": [
+    {
+      "eli": "DU/2026/982",
+      "displayAddress": "Dz.U. 2026 poz. 982",
+      "title": "Ustawa z dnia 29 maja 2026 r. o zmianie ustawy o drogach publicznych oraz niektórych innych ustaw",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-07-24T15:11:24",
+      "promulgation": "2026-07-22",
+      "entryIntoForce": "2026-09-21",
+      "url": "https://eli.gov.pl/eli/DU/2026/982/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2026/820"
+      ]
+    },
+    {
+      "eli": "DU/2026/815",
+      "displayAddress": "Dz.U. 2026 poz. 815",
+      "title": "Ustawa z dnia 29 maja 2026 r. o zmianie ustawy o zarządzaniu kryzysowym oraz niektórych innych ustaw",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-06-24T10:47:06",
+      "promulgation": "2026-06-19",
+      "entryIntoForce": "2026-07-04",
+      "url": "https://eli.gov.pl/eli/DU/2026/815/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2026/244"
+      ]
+    },
+    {
+      "eli": "DU/2026/737",
+      "displayAddress": "Dz.U. 2026 poz. 737",
+      "title": "Ustawa z dnia 15 maja 2026 r. o zmianie ustawy o ochronie przyrody oraz niektórych innych ustaw",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-06-12T08:48:56",
+      "promulgation": "2026-06-08",
+      "entryIntoForce": "2026-06-23",
+      "url": "https://eli.gov.pl/eli/DU/2026/737/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2026/244"
+      ]
+    },
+    {
+      "eli": "DU/2026/473",
+      "displayAddress": "Dz.U. 2026 poz. 473",
+      "title": "Ustawa z dnia 11 marca 2026 r. o zmianie ustawy o Państwowej Inspekcji Pracy oraz niektórych innych ustaw",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-04-10T10:52:58",
+      "promulgation": "2026-04-07",
+      "entryIntoForce": "2026-07-08",
+      "url": "https://eli.gov.pl/eli/DU/2026/473/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2025/277"
+      ]
+    },
+    {
+      "eli": "DU/2026/25",
+      "displayAddress": "Dz.U. 2026 poz. 25",
+      "title": "Ustawa z dnia 4 grudnia 2025 r. o zmianie ustawy - Kodeks pracy oraz ustawy o zakładowym funduszu świadczeń socjalnych",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-01-19T13:45:02",
+      "promulgation": "2026-01-12",
+      "entryIntoForce": "2026-01-27",
+      "url": "https://eli.gov.pl/eli/DU/2026/25/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2025/277"
+      ]
+    },
+    {
+      "eli": "DU/2025/1661",
+      "displayAddress": "Dz.U. 2025 poz. 1661",
+      "title": "Ustawa z dnia 5 listopada 2025 r. o układach zbiorowych pracy i porozumieniach zbiorowych",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2025-12-09T14:15:21",
+      "promulgation": "2025-11-28",
+      "entryIntoForce": "2025-12-13",
+      "url": "https://eli.gov.pl/eli/DU/2025/1661/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2025/277"
+      ]
+    },
+    {
+      "eli": "DU/2025/1423",
+      "displayAddress": "Dz.U. 2025 poz. 1423",
+      "title": "Ustawa z dnia 26 września 2025 r. o zmianie ustawy - Kodeks pracy oraz niektórych innych ustaw",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2025-10-24T09:15:24",
+      "promulgation": "2025-10-21",
+      "entryIntoForce": "2026-01-01",
+      "url": "https://eli.gov.pl/eli/DU/2025/1423/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2025/277"
+      ]
+    },
+    {
+      "eli": "DU/2025/807",
+      "displayAddress": "Dz.U. 2025 poz. 807",
+      "title": "Ustawa z dnia 4 czerwca 2025 r. o zmianie ustawy - Kodeks pracy",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2025-08-06T14:05:00",
+      "promulgation": "2025-06-23",
+      "entryIntoForce": "2025-12-24",
+      "url": "https://eli.gov.pl/eli/DU/2025/807/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2025/277"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+/* ═══════════════════════════════════
+   TYPOGRAPHY HELPERS
+═══════════════════════════════════ */
+.sec-title {
+  font-size: .8rem; font-weight: 950;
+  color: var(--navy);
+  text-transform: uppercase; letter-spacing: .3px;
+  margin: 16px 0 8px;
+  padding-left: 10px;
+  border-left: 3px solid var(--gold);
+}
+.tag {
+  display: inline-block;
+  font-size: .62rem; font-weight: 800;
+  padding: 2px 8px; border-radius: 20px;
+  margin: 2px 2px 2px 0;
+  background: var(--navy2); color: #fff;
+}
+.tag.red    { background: var(--red); }
+.tag.orange { background: var(--orange); }
+.tag.green  { background: var(--green); }
+.tag.gold   { background: var(--gold); color: var(--navy); }
+
+/* ═══════════════════════════════════
+   CARD
+═══════════════════════════════════ */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.card-hdr {
+  background: var(--navy);
+  color: #fff;
+  padding: 11px 15px;
+  font-size: .83rem; font-weight: 800;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-body { padding: 15px; }

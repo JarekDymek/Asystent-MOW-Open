@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a3a5c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MOW Open">
+<meta name="application-name" content="Asystent MOW Open">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="icon" href="assets/icons/icon-192.png" type="image/png">
+<title>Asystent MOW Open</title>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/home.css">
+<link rel="stylesheet" href="assets/css/procedures.css">
+<link rel="stylesheet" href="assets/css/social-levels.css">
+<link rel="stylesheet" href="assets/css/detail.css">
+<link rel="stylesheet" href="assets/css/notes.css">
+<link rel="stylesheet" href="assets/css/ai.css">
+<link rel="stylesheet" href="assets/css/harmonogram.css">
+<link rel="stylesheet" href="assets/css/current-info.css">
+<link rel="stylesheet" href="assets/css/sync.css">
+<link rel="stylesheet" href="assets/css/utilities.css">
+  <script src="assets/vendor/mammoth.browser.min.js" defer></script>
+  <script src="assets/vendor/xlsx.full.min.js" defer></script>
+  <script src="assets/vendor/qrcode.min.js" defer></script>
+  <script src="assets/vendor/jsQR.js" defer></script>
+  <script src="assets/js/data-schedule.js" defer></script>
+  <script src="assets/js/data-procedures.js" defer></script>
+  <script src="assets/js/data-social-levels.js" defer></script>
+  <script src="assets/js/data-quick-actions.js" defer></script>
+  <script src="assets/js/data-chat-pills.js" defer></script>
+  <script src="assets/js/data-laws.js" defer></script>
+  <script src="assets/js/open-db.js" defer></script>
+  <script src="assets/js/state.js" defer></script>
+  <script src="assets/js/utils.js" defer></script>
+  <script src="assets/js/files.js" defer></script>
+  <script src="assets/js/schedule-parser.js" defer></script>
+  <script src="assets/js/document-import.js" defer></script>
+  <script src="assets/js/accordion.js" defer></script>
+  <script src="assets/js/navigation.js" defer></script>
+  <script src="assets/js/clock.js" defer></script>
+  <script src="assets/js/day-schedule.js" defer></script>
+  <script src="assets/js/main-actions.js" defer></script>
+  <script src="assets/js/procedures.js" defer></script>
+  <script src="assets/js/social-levels.js" defer></script>
+  <script src="assets/js/law.js" defer></script>
+  <script src="assets/js/notes.js" defer></script>
+  <script src="assets/js/current-info.js" defer></script>
+  <script src="assets/js/help.js" defer></script>
+  <script src="assets/js/answer-bank-loader.js" defer></script>
+  <script src="assets/js/local-assistant.js" defer></script>
+  <script src="assets/js/ai-config.js" defer></script>
+  <script src="assets/js/ai-chat.js" defer></script>
+  <script src="assets/js/ai-voice.js" defer></script>
+  <script src="assets/js/tab-ai.js" defer></script>
+  <script src="assets/js/harmonogram.js" defer></script>
+  <script src="assets/js/weekly-plan.js" defer></script>
+  <script src="assets/js/knowledge-storage.js" defer></script>
+<script src="assets/js/knowledge-list.js" defer></script>
+  <script src="assets/js/knowledge-form.js" defer></script>
+  <script src="assets/js/knowledge-context.js" defer></script>
+  <script src="assets/js/device-sync.js" defer></script>
+  <script src="assets/js/backup.js" defer></script>
+  <script src="assets/js/pwa.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <img class="hdr-logo" src="assets/icons/icon-192.png" alt="Logo MOW">
+  <div class="hdr-text">
+    <h1>Asystent MOW Open</h1>
+    <p>lokalny asystent wychowawcy · bez tokenów</p>
+  </div>
+  <button class="hdr-help" type="button" onclick="openHelp()" title="Pomoc" aria-label="Pomoc">?</button>
+  <button class="hdr-install" id="install-btn" type="button" style="display:none">Instaluj</button>
+  <span class="hdr-badge">v1.0</span>
+</header>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+<!-- ════════════ DYŻUR ════════════ -->
+<div class="screen active" id="s-dyzur">
+
+  <div class="clock-box">
+    <div>
+      <div class="clock-time" id="live-clock">--:--</div>
+      <div class="clock-sub" id="live-date">ładowanie...</div>
+    </div>
+    <div class="clock-right">
+      <div class="clock-act" id="curr-act">Sprawdzanie...</div>
+      <div class="clock-sub">aktualne zajęcie</div>
+    </div>
+  </div>
+
+  <button class="section-toggle" type="button" id="day-schedule-toggle" onclick="toggleDaySchedule()">
+    <span class="st-main">📋 Harmonogram dnia</span>
+    <span class="st-state" id="day-schedule-state">Zwiń</span>
+  </button>
+  <div class="card collapsible-card" id="day-schedule-card" style="padding:0"><div id="sched-list"></div></div>
+
+  <p class="sec-title">⚡ Szybkie akcje</p>
+  <div class="quick-grid" id="quick-grid"></div>
+
+</div><!-- /s-dyzur -->
+
+<!-- ════════════ PROCEDURY ════════════ -->
+<div class="screen tile-screen" id="s-proc">
+  <div class="mini-ai">
+    <div class="mini-ai-title">Zapytaj lokalnego asystenta o procedurę</div>
+    <div class="mini-ai-row">
+      <input class="mini-ai-input" id="proc-ai-input" type="text" placeholder="Opisz sytuację, np. bójka, ucieczka, odmowa wykonania polecenia...">
+      <button class="mini-ai-btn" type="button" onclick="askAIFromTab('procedury','proc-ai-input')">Zapytaj</button>
+    </div>
+    <div class="mini-ai-hint">Asystent najpierw sprawdzi procedury MOW. Gdy opis będzie zbyt ogólny, dopyta.</div>
+  </div>
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="proc-search" placeholder="Szukaj procedury..." oninput="filterProcs(this.value)">
+  </div>
+  <div class="proc-search-status" id="proc-search-status" aria-live="polite" hidden></div>
+  <button class="section-toggle" type="button" data-accordion-target="proc-crisis-card" onclick="toggleAccordion('proc-crisis-card')">
+    <span class="st-main">🔴 Sytuacje kryzysowe</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="proc-crisis-card" style="padding:0"><div id="pl-crisis"></div></div>
+  <button class="section-toggle" type="button" data-accordion-target="proc-safety-card" onclick="toggleAccordion('proc-safety-card')">
+    <span class="st-main">🟡 Bezpieczeństwo</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="proc-safety-card" style="padding:0"><div id="pl-safety"></div></div>
+  <button class="section-toggle" type="button" data-accordion-target="proc-other-card" onclick="toggleAccordion('proc-other-card')">
+    <span class="st-main">🟢 Inne procedury</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="proc-other-card" style="padding:0"><div id="pl-other"></div></div>
+</div>
+
+<!-- ════════════ STOPNIE ════════════ -->
+<div class="screen tile-screen" id="s-stop">
+  <div class="mini-ai">
+    <div class="mini-ai-title">Zapytaj lokalnego asystenta o stopień uspołecznienia</div>
+    <div class="mini-ai-row">
+      <input class="mini-ai-input" id="stop-ai-input" type="text" placeholder="Opisz zachowanie wychowanka albo wątpliwość kwalifikacyjną...">
+      <button class="mini-ai-btn" type="button" onclick="askAIFromTab('stopnie','stop-ai-input')">Zapytaj</button>
+    </div>
+    <div class="mini-ai-hint">Asystent odwoła się do regulaminu i wskaże, czego brakuje do jednoznacznej oceny.</div>
+  </div>
+  <button class="section-toggle" type="button" data-accordion-target="stop-rules-card" onclick="toggleAccordion('stop-rules-card')">
+    <span class="st-main">ℹ️ Zasady kwalifikacji</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="collapsible-card accordion-panel" id="stop-rules-card">
+    <div id="stop-rules-render"></div>
+  </div>
+  <button class="section-toggle" type="button" data-accordion-target="stop-neg-card" onclick="toggleAccordion('stop-neg-card')">
+    <span class="st-main">📉 Stopnie ujemne</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="collapsible-card accordion-panel" id="stop-neg-card"><div id="st-neg"></div></div>
+  <button class="section-toggle" type="button" data-accordion-target="stop-pos-card" onclick="toggleAccordion('stop-pos-card')">
+    <span class="st-main">📈 Stopnie pozytywne</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="collapsible-card accordion-panel" id="stop-pos-card"><div id="st-pos"></div></div>
+  <button class="section-toggle" type="button" data-accordion-target="stop-assistant-card" onclick="toggleAccordion('stop-assistant-card')">
+    <span class="st-main">🔎 Pomoc w ocenie kryteriów</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="stop-assistant-card"><div class="card-body">
+    <div class="abox info"><span class="ai">ℹ️</span><div>To arkusz pomocniczy działający bez AI. Porządkuje obserwacje, ale nie kwalifikuje wychowanka i nie zastępuje zespołu.</div></div>
+    <label class="stop-check-label" for="stop-check-level">Oceniany stopień</label>
+    <select id="stop-check-level" class="stop-check-select" onchange="renderStopChecklist()">
+      <option value="">Wybierz stopień...</option>
+    </select>
+    <div id="stop-check-form" class="stop-check-form"><p class="stop-check-empty">Wybierz stopień, aby wyświetlić kryteria.</p></div>
+    <button class="btn stop-check-submit" type="button" onclick="summarizeStopChecklist()">Podsumuj braki i kryteria</button>
+    <div id="stop-check-result" aria-live="polite"></div>
+  </div></div>
+  <button class="section-toggle" type="button" data-accordion-target="stop-drop-card" onclick="toggleAccordion('stop-drop-card')">
+    <span class="st-main">⬇️ Zmiana stopnia po zdarzeniu</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="stop-drop-card"><div class="card-body">
+    <div class="abox danger"><span class="ai">🛡️</span><div><strong>Najpierw bezpieczeństwo i pomoc.</strong> Poniższa lista nie zastępuje procedury kryzysowej ani ustalenia faktów. Zmianę stopnia rozpatruje się później zgodnie z regulaminem.</div></div>
+    <div id="stop-events-render"></div>
+  </div></div>
+</div>
+
+<!-- ════════════ LOKALNY ASYSTENT ════════════ -->
+<div class="screen tile-screen" id="s-ai">
+  <div class="ai-screen">
+    <div class="ai-status" id="ai-status">
+      <span class="dot offline" id="ai-dot"></span>
+      <span id="ai-status-txt">Uruchamiam lokalną bazę...</span>
+    </div>
+    <div class="ai-scope">Zakres odpowiedzi: <strong id="ai-scope-label">Wszystkie obszary</strong></div>
+
+    <div class="abox info" style="margin-bottom:10px">
+      <span class="ai">🤖</span>
+      <div style="font-size:.78rem"><strong>Działa bez tokenów i bez wysyłania pytań.</strong> Odpowiada z banku 250 odpowiedzi, procedur, prawa oraz dokumentów zapisanych na tym urządzeniu. Gdy brakuje pewnych danych, dopytuje.</div>
+    </div>
+
+    <div class="chat-window" id="chat-window">
+      <div class="msg ai">Jestem lokalnym asystentem MOW Open. Nie korzystam z zewnętrznego modelu ani tokenów. Zapytaj o procedurę, stopień, prawo, wiadomość dyrekcji lub lokalny grafik.</div>
+    </div>
+
+    <p class="sec-title" style="margin-top:8px">💡 Szybkie pytania</p>
+    <div class="chat-pills" id="chat-pills"></div>
+    <input type="file" id="ai-file-input"
+      accept=".txt,.md,.csv,.tsv,.doc,.docx,.xls,.xlsx,.pdf,.eml,image/*"
+      multiple style="display:none" onchange="handleAIFileInput(this)">
+    <div class="attach-list" id="ai-attachments"></div>
+
+    <div class="chat-row">
+      <div class="chat-input-wrap">
+        <textarea class="chat-input" id="chat-input" rows="1"
+          placeholder="Napisz pytanie..."
+          oninput="autoResizeTA(this); saveChatDraft()"
+          onkeydown="chatKeydown(event)"></textarea>
+      </div>
+      <button class="chat-attach" onclick="document.getElementById('ai-file-input').click()" title="Dodaj dokument" aria-label="Dodaj dokument">📎</button>
+      <button class="chat-voice" id="voice-btn" onclick="toggleVoiceInput()" title="Dyktuj pytanie" aria-label="Dyktuj pytanie">🎙</button>
+      <button class="chat-send" id="chat-send-btn" onclick="sendChat()" title="Wyślij">➤</button>
+    </div>
+
+    <button class="btn sec" style="width:100%;margin-top:8px" onclick="clearChat()">🗑 Wyczyść historię</button>
+  </div>
+</div>
+
+<!-- ════════════ PRAWO ════════════ -->
+<div class="screen tile-screen" id="s-prawo">
+
+  <div class="mini-ai">
+    <div class="mini-ai-title">Zapytaj lokalnego asystenta o prawo i dokumentację</div>
+    <div class="mini-ai-row">
+      <input class="mini-ai-input" id="prawo-ai-input" type="text" placeholder="Np. podstawa prawna, dokumentacja zdarzenia, prawa wychowanka...">
+      <button class="mini-ai-btn" type="button" onclick="askAIFromTab('prawo','prawo-ai-input')">Zapytaj</button>
+    </div>
+    <div class="mini-ai-hint">Asystent wskaże źródło i oddzieli przepisy prawa od dokumentów wewnętrznych MOW.</div>
+  </div>
+
+  <button class="section-toggle" type="button" data-accordion-target="law-sources-card" onclick="toggleAccordion('law-sources-card')">
+    <span class="st-main">📚 Podstawy prawne MOW</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="law-sources-card" style="padding:0">
+    <div class="law-source-guide"><strong>Jak czytać:</strong> akty prawne otwierają urzędowe źródło. Dokument wewnętrzny MOW określa codzienny sposób działania, ale nie może być sprzeczny z aktem wyższego rzędu. Przy zmianie prawa sprawdź datę i aktualny tekst.</div>
+    <section class="law-live-check" aria-labelledby="law-live-title">
+      <div class="law-live-head">
+        <div>
+          <strong id="law-live-title">Kontrola aktualności ELI</strong>
+          <span>Bezpłatne sprawdzenie urzędowych metadanych. Nie korzysta z AI.</span>
+        </div>
+        <button class="btn law-live-button" id="law-live-button" type="button" onclick="refreshLegalUpdates(true)">Sprawdź teraz</button>
+      </div>
+      <div class="law-live-status" id="law-live-status" role="status" aria-live="polite">Jeszcze nie sprawdzono źródeł online.</div>
+      <div id="law-live-results"></div>
+    </section>
+    <div id="law-list-render"></div>
+  </div>
+
+  <button class="section-toggle" type="button" data-accordion-target="law-rights-card" onclick="toggleAccordion('law-rights-card')">
+    <span class="st-main">⚖️ Prawa wychowanka (aktualna ustawa)</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="law-rights-card"><div class="card-body">
+    <div style="font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:8px">Art. 6–7 – środki stosowane wobec nieletniego:</div>
+    <div style="font-size:.85rem;line-height:1.8;margin-bottom:12px">
+      • środki wychowawcze, środek leczniczy i środek poprawczy<br>
+      • upomnienie, zobowiązanie do określonego postępowania, naprawienie szkody<br>
+      • nadzór rodziców, opiekuna, organizacji społecznej albo kuratora<br>
+      • skierowanie do ośrodka kuratorskiego lub instytucji wspierającej<br>
+      • <strong>umieszczenie w MOW jako środek wychowawczy (art. 7 pkt 10)</strong>
+    </div>
+    <hr class="divider">
+    <div style="font-size:.88rem;font-weight:800;color:var(--navy);margin:10px 0 8px">Art. 107 – prawa wychowanka MOW:</div>
+    <div style="font-size:.85rem;line-height:1.8">
+      • poszanowanie godności, prywatności i ochrona przed przemocą<br>
+      • nauka, pomoc psychologiczna, pedagogiczna i terapeutyczna<br>
+      • informacja o prawach, obowiązkach, statucie i zasadach pobytu<br>
+      • kontakt z rodziną oraz innymi osobami na zasadach określonych w przepisach i regulaminie<br>
+      • skargi, wnioski i zażalenie na czynności naruszające prawa
+    </div>
+    <p style="font-size:.65rem;color:var(--muted);margin-top:10px;font-style:italic">Źródło: Ustawa o wspieraniu i resocjalizacji nieletnich (t.j. Dz.U. 2026 poz. 163)</p>
+  </div></div>
+
+  <button class="section-toggle" type="button" data-accordion-target="law-force-card" onclick="toggleAccordion('law-force-card')">
+    <span class="st-main">⬇️ Środki przymusu bezpośredniego</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="law-force-card"><div class="card-body">
+    <div class="abox danger" style="margin-bottom:10px">
+      <span class="ai">🛑</span>
+      <div style="font-size:.8rem"><strong>W MOW katalog jest ograniczony.</strong> Art. 122 ustawy o wspieraniu i resocjalizacji nieletnich dopuszcza, po bezskuteczności oddziaływań psychologiczno-pedagogicznych i tylko w ustawowych sytuacjach, zastosowanie <strong>siły fizycznej</strong>. Nie jest to kara ani metoda dyscyplinowania.</div>
+    </div>
+    <div style="font-size:.85rem;line-height:1.9">
+      <strong>Przed interwencją:</strong><br>
+      • oceń bezpośrednie zagrożenie życia, zdrowia lub bezpieczeństwa<br>
+      • użyj dostępnych oddziaływań psychologiczno-pedagogicznych<br>
+      • wezwij wsparcie; przy poważnym zagrożeniu dzwoń 112<br>
+      • zastosuj wyłącznie działanie konieczne, proporcjonalne i możliwie krótkie<br>
+    </div>
+    <hr class="divider">
+    <div style="font-size:.85rem;line-height:1.7">
+      <strong>Obowiązki po zastosowaniu:</strong><br>
+      • przerwij działanie natychmiast po ustaniu przyczyny<br>
+      • oceń stan zdrowia i zapewnij pomoc medyczną, jeśli jest potrzebna<br>
+      • natychmiast powiadom Dyrektora i sporządź wymaganą dokumentację<br>
+      • zabezpiecz nagranie monitoringu przez wymagany okres<br>
+      • wykonaj wymagane zawiadomienia i poinformuj o prawie złożenia skargi
+    </div>
+    <div class="law-source-actions">
+      <a href="https://eli.gov.pl/eli/DU/2026/163/ogl" target="_blank" rel="noopener noreferrer">Ustawa, art. 122 ↗</a>
+      <a href="https://eli.gov.pl/eli/DU/2026/244/ogl" target="_blank" rel="noopener noreferrer">Ustawa o środkach przymusu ↗</a>
+    </div>
+    <p class="law-review-note">Stan źródeł zweryfikowany: 19.08.2026. Zawsze sprawdź również aktualną procedurę wewnętrzną MOW.</p>
+  </div></div>
+
+  <button class="section-toggle" type="button" data-accordion-target="law-kb-form-card" onclick="toggleAccordion('law-kb-form-card')">
+    <span class="st-main">🗂️ Baza wiedzy, wzory i zmiany czasowe</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="law-kb-form-card"><div class="card-body">
+    <div class="kb-form">
+      <select id="kb-type">
+        <option value="zmiana-czasowa">Zmiana czasowa / zarządzenie okresowe</option>
+        <option value="zmiana-stala">Zmiana stała regulaminu</option>
+        <option value="wzor-dokumentu">Wzór dokumentu</option>
+        <option value="opinia">Opinia o wychowanku / semestralna</option>
+        <option value="wniosek">Wniosek / druk</option>
+        <option value="ustawa">Ustawa / tekst jednolity</option>
+        <option value="rozporzadzenie">Rozporządzenie / podstawa prawna</option>
+      </select>
+      <input id="kb-title" type="text" placeholder="Tytuł, np. Telefony w wakacje 2026 albo Wzór opinii semestralnej">
+      <input id="kb-source" type="text" placeholder="Źródło, np. Zarządzenie Dyrektora nr ... / Statut / wzór MOW">
+      <div class="kb-dates">
+        <input id="kb-document-date" type="date" title="Data dokumentu">
+        <input id="kb-valid-from" type="date" title="Obowiązuje od">
+        <input id="kb-valid-to" type="date" title="Obowiązuje do">
+      </div>
+      <textarea id="kb-content" placeholder="Wklej treść dokumentu, wzoru albo zmiany. Przykład: W okresie wakacji od ... do ... wychowankowie na stopniu +1 i +2 mogą korzystać z telefonów dodatkowo przez godzinę po obiedzie."></textarea>
+    </div>
+    <input type="file" id="kb-file-input"
+      accept=".txt,.md,.csv,.doc,.docx,.xls,.xlsx,.pdf,.eml"
+      style="display:none" onchange="handleKnowledgeFile(this)">
+    <div class="btn-row">
+      <button class="btn" type="button" onclick="saveKnowledgeItem()">Zapisz w bazie wiedzy</button>
+      <button class="btn sec" type="button" onclick="document.getElementById('kb-file-input').click()">Wczytaj plik</button>
+      <button class="btn qblue" type="button" onclick="askAIAboutKnowledge()">Zapytaj lokalnego asystenta</button>
+    </div>
+    <div class="weekly-status" id="kb-status">Wpisy z datą „obowiązuje do” po tej dacie będą traktowane jako archiwalne.</div>
+  </div></div>
+
+  <button class="section-toggle" type="button" data-accordion-target="law-kb-list-card" onclick="toggleAccordion('law-kb-list-card')">
+    <span class="st-main">📌 Zapisane wpisy bazy wiedzy</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="collapsible-card accordion-panel" id="law-kb-list-card"><div id="knowledge-list"></div></div>
+
+  <button class="section-toggle" type="button" data-accordion-target="local-backup-card" onclick="toggleAccordion('local-backup-card')">
+    <span class="st-main">🔐 Kopia i synchronizacja urządzeń</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="local-backup-card"><div class="card-body">
+    <div class="backup-note">
+      Wiadomości, dokumenty, grafiki i historia asystenta pozostają lokalne. Kopia jest szyfrowana hasłem, a synchronizacja działa bezpośrednio w tej samej sieci Wi-Fi.
+    </div>
+    <label class="sync-field"><span>Hasło zaszyfrowanej kopii</span><input id="backup-password" type="password" minlength="8" autocomplete="new-password" placeholder="Co najmniej 8 znaków"></label>
+    <input type="file" id="backup-file-input" accept=".asmow,application/vnd.asmow.open+json" style="display:none" onchange="importLocalBackup(this)">
+    <div class="btn-row">
+      <button class="btn" type="button" onclick="exportLocalBackup(false)">Pobierz kopię .asmow</button>
+      <button class="btn sec" type="button" onclick="exportLocalBackup(true)">Udostępnij na telefon</button>
+      <button class="btn sec" type="button" onclick="document.getElementById('backup-file-input').click()">Scal kopię</button>
+      <button class="btn red" type="button" onclick="clearLocalDeviceData()">Wyczyść urządzenie</button>
+    </div>
+    <div class="weekly-status" id="backup-status">Hasło nie jest nigdzie zapisywane. Bez niego kopii nie można odzyskać.</div>
+
+    <hr class="divider">
+    <div class="sync-title">Bezpośrednia synchronizacja PC ↔ telefon</div>
+    <div class="sync-note">Oba urządzenia muszą mieć otwartą aplikację i być w tej samej sieci Wi-Fi. Dane nie trafiają na serwer.</div>
+    <div data-sync-step="start">
+      <div class="btn-row"><button class="btn" type="button" onclick="OpenDeviceSync.startHost()">1. Rozpocznij na tym urządzeniu</button></div>
+      <label class="sync-field"><span>Albo wklej kod z pierwszego urządzenia</span><textarea id="sync-remote-code" rows="3" spellcheck="false" placeholder="ASMOW1..."></textarea></label>
+      <div class="btn-row">
+        <button class="btn sec" type="button" onclick="OpenDeviceSync.scanCode('sync-remote-code')">Skanuj kod</button>
+        <button class="btn" type="button" onclick="OpenDeviceSync.join()">2. Dołącz</button>
+      </div>
+    </div>
+    <div data-sync-step="host-offer" hidden>
+      <canvas class="sync-qr" id="sync-offer-qr"></canvas>
+      <textarea class="sync-code" id="sync-offer-code" rows="3" readonly></textarea>
+      <button class="btn sec" type="button" onclick="OpenDeviceSync.copyCode('sync-offer-code')">Kopiuj kod rozpoczęcia</button>
+      <label class="sync-field"><span>Kod odpowiedzi z telefonu</span><textarea id="sync-answer-input" rows="3" spellcheck="false" placeholder="ASMOW1..."></textarea></label>
+      <div class="btn-row">
+        <button class="btn sec" type="button" onclick="OpenDeviceSync.scanCode('sync-answer-input')">Skanuj odpowiedź</button>
+        <button class="btn" type="button" onclick="OpenDeviceSync.finishHost()">3. Połącz i synchronizuj</button>
+      </div>
+    </div>
+    <div data-sync-step="join-answer" hidden>
+      <canvas class="sync-qr" id="sync-answer-qr"></canvas>
+      <textarea class="sync-code" id="sync-answer-code" rows="3" readonly></textarea>
+      <button class="btn sec" type="button" onclick="OpenDeviceSync.copyCode('sync-answer-code')">Kopiuj kod odpowiedzi</button>
+      <div class="sync-note">Zeskanuj ten kod na pierwszym urządzeniu. Po połączeniu synchronizacja rozpocznie się automatycznie.</div>
+    </div>
+    <div class="weekly-status" id="device-sync-status">Gotowe do połączenia urządzeń.</div>
+  </div></div>
+
+  <button class="section-toggle" type="button" data-accordion-target="law-docs-card" onclick="toggleAccordion('law-docs-card')">
+    <span class="st-main">📄 Dokumenty wewnętrzne MOW</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="law-docs-card"><div class="card-body">
+    <span class="tag gold">Statut MOW</span>
+    <span class="tag">Reg. Stopni Uspołecznienia</span>
+    <span class="tag">Procedury Postępowania</span>
+    <span class="tag">Procedury Niebezp. Przedmiotów</span>
+    <span class="tag">Poradnik Wychowawcy</span>
+    <span class="tag">Wymag. Dyplomowanie</span>
+    <p style="font-size:.65rem;color:var(--muted);margin-top:10px;font-style:italic">Dokumenty formalne MOW nr 1 im. T. Kościuszki w Malborku</p>
+  </div></div>
+
+  <button class="section-toggle" type="button" data-accordion-target="law-phones-card" onclick="toggleAccordion('law-phones-card')">
+    <span class="st-main">📞 Numery alarmowe i kontakty</span><span class="st-state">Rozwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="law-phones-card" style="padding:0">
+    <div class="info-row"><span class="il">🚒 Straż Pożarna</span><span class="iv"><a href="tel:998">998</a></span></div>
+    <div class="info-row"><span class="il">👮 Policja</span><span class="iv"><a href="tel:997">997</a></span></div>
+    <div class="info-row"><span class="il">🚑 Pogotowie</span><span class="iv"><a href="tel:999">999</a></span></div>
+    <div class="info-row"><span class="il">📞 Numer alarmowy</span><span class="iv"><a href="tel:112">112</a></span></div>
+    <div class="info-row"><span class="il">🏫 MOW Malbork (centrala)</span><span class="iv"><a href="tel:556473450">55 647 34 50</a></span></div>
+    <div class="info-row"><span class="il">⚖️ Sąd Rodzinny Malbork</span><span class="iv"><a href="tel:556472020">55 647 20 20</a></span></div>
+    <div class="info-row"><span class="il">🔵 Telefon zaufania MEN</span><span class="iv"><a href="tel:116111">116 111</a></span></div>
+  </div>
+
+</div><!-- /s-prawo -->
+
+<!-- ════════════ BIEŻĄCE INFORMACJE ════════════ -->
+<div class="screen tile-screen" id="s-info">
+  <div class="mini-ai">
+    <div class="mini-ai-title">Zapytaj lokalnego asystenta o bieżące informacje</div>
+    <div class="mini-ai-row">
+      <input class="mini-ai-input" id="info-ai-input" type="text" placeholder="Np. które komunikaty są ważne na najbliższy dyżur?">
+      <button class="mini-ai-btn" type="button" onclick="askAIFromTab('bieżące informacje','info-ai-input')">Zapytaj</button>
+    </div>
+    <div class="mini-ai-hint">Asystent przeszuka komunikaty zapisane na tym urządzeniu. Niczego nie wysyła.</div>
+  </div>
+
+  <button class="section-toggle" type="button" data-accordion-target="current-info-form-card" onclick="toggleAccordion('current-info-form-card')" data-default="open">
+    <span class="st-main">📣 Dodaj informację od dyrekcji</span><span class="st-state">Zwiń</span>
+  </button>
+  <div class="card collapsible-card accordion-panel" id="current-info-form-card"><div class="card-body">
+    <input type="file" id="current-info-file-input" accept=".txt,.md,.eml,.doc,.docx,.xls,.xlsx,.pdf,image/*" multiple style="display:none" onchange="importCurrentInfoFile(this)">
+    <input type="file" id="current-info-attachment-input" accept=".txt,.md,.eml,.doc,.docx,.xls,.xlsx,.pdf,image/*" multiple style="display:none" onchange="addCurrentInfoDraftFiles(this)">
+    <div class="abox info" style="margin-bottom:10px"><span class="ai">🔒</span><div>Dodaj pobraną wiadomość EML, dokument lub załączniki. Odczyt i zapis odbywają się wyłącznie na tym urządzeniu.</div></div>
+    <div class="current-info-form">
+      <input id="current-info-date" type="date" title="Data wiadomości">
+      <input id="current-info-title" type="text" placeholder="Tytuł wiadomości">
+      <input id="current-info-topic" type="text" placeholder="Czego dotyczy, np. telefony, przepustki, zebranie">
+      <input id="current-info-source" type="text" value="Dyrekcja MOW" placeholder="Źródło lub nadawca">
+      <textarea id="current-info-body-input" placeholder="Wklej treść wiadomości od dyrektora internatu..."></textarea>
+    </div>
+    <div class="current-info-draft-files" id="current-info-draft-files"></div>
+    <div class="btn-row">
+      <button class="btn" type="button" onclick="saveCurrentInfoFromForm()">Zapisz</button>
+      <button class="btn sec" type="button" onclick="document.getElementById('current-info-file-input').click()">Importuj wiadomość lub dokument</button>
+      <button class="btn sec" type="button" onclick="document.getElementById('current-info-attachment-input').click()">Dodaj załączniki</button>
+      <button class="btn sec" type="button" onclick="clearCurrentInfoForm()">Wyczyść</button>
+      <button class="btn qblue" type="button" onclick="askAIAboutCurrentInfo()">Zapytaj asystenta</button>
+    </div>
+    <div class="current-info-status" id="current-info-status">Plik EML może automatycznie przekazać znaleziony grafik do zakładki Harmonogram.</div>
+  </div></div>
+
+  <button class="section-toggle" type="button" data-accordion-target="current-info-list-card" onclick="toggleAccordion('current-info-list-card')" data-default="open">
+    <span class="st-main">🗂️ Archiwum od 2026 r.</span><span class="st-state">Zwiń</span>
+  </button>
+  <div class="collapsible-card accordion-panel" id="current-info-list-card">
+    <div class="current-info-tools">
+      <input class="current-info-search" id="current-info-search" type="text" placeholder="Szukaj w informacjach..." oninput="renderCurrentInfoList()">
+      <div class="current-info-count" id="current-info-count">Wpisy: 0</div>
+      <div class="current-info-list" id="current-info-list"></div>
+    </div>
+  </div>
+</div><!-- /s-info -->
+
+<!-- ════════════ HARMONOGRAM ════════════ -->
+<div class="screen tile-screen" id="s-harm">
+
+  <div class="abox info" style="margin-bottom:10px">
+    <span class="ai">📁</span>
+    <div style="font-size:.92rem"><strong>Lokalny harmonogram:</strong> dodaj DOCX, Excel, tekst, PDF albo zdjęcie. Plik nie jest wysyłany do Internetu.</div>
+  </div>
+
+  <div class="weekly-grid" id="weekly-plan"></div>
+
+  <div class="card card-body" style="margin-bottom:10px">
+    <div style="font-weight:900;margin-bottom:8px">📅 Zapytaj o grafik internatu</div>
+    <label class="internat-week-field" for="internat-schedule-week">
+      <span>Tydzień grafiku</span>
+      <select id="internat-schedule-week" onchange="changeInternatScheduleWeek()" aria-label="Wybierz tydzień grafiku"></select>
+    </label>
+    <div class="internat-schedule-query">
+      <input id="internat-schedule-question" type="text" placeholder="Nazwisko, np. Dembiński"
+        onkeydown="if(event.key==='Enter')queryInternatSchedule()">
+      <button class="btn" type="button" onclick="queryInternatSchedule()">Sprawdź</button>
+    </div>
+    <div class="weekly-status" id="internat-schedule-index-status" style="margin-top:8px" aria-live="polite">Sprawdzam indeks grafików...</div>
+    <div class="weekly-status" id="internat-schedule-result" style="display:none;margin-top:8px" aria-live="polite"></div>
+  </div>
+
+  <input type="file" id="harm-file-input"
+    accept=".txt,.csv,.tsv,.doc,.docx,.xls,.xlsx,.pdf,image/*" multiple
+    style="display:none" onchange="handleHarmFile(this)">
+
+  <button class="section-toggle" type="button" data-accordion-target="weekly-settings-card" onclick="toggleAccordion('weekly-settings-card')">
+    <span class="st-main">🗓️ Mój plan z lokalnych grafików</span><span class="st-state">Rozwiń</span>
+  </button>
+
+  <button class="section-toggle" type="button" data-accordion-target="harm-upload-card" onclick="toggleAccordion('harm-upload-card')">
+    <span class="st-main">📋 Dodaj pliki grafików lub screeny</span><span class="st-state">Rozwiń</span>
+  </button>
+
+  <div class="card collapsible-card accordion-panel" id="weekly-settings-card"><div class="card-body">
+    <div class="weekly-settings">
+      <input id="weekly-educator" type="text" placeholder="Moje nazwisko, np. Dymek" onkeydown="if(event.key==='Enter')fetchWeeklyPlan()">
+    </div>
+    <div class="btn-row">
+      <button class="btn" type="button" onclick="fetchWeeklyPlan()">Pokaż mój plan</button>
+      <button class="btn qblue" type="button" onclick="askAIAboutWeeklyPlan()">Podsumuj lokalnie</button>
+    </div>
+    <div class="weekly-status" id="weekly-status">Dodaj pliki grafików, wpisz nazwisko i wybierz „Pokaż mój plan”.</div>
+  </div></div>
+
+  <div class="collapsible-card accordion-panel" id="harm-upload-card">
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('harm-file-input').click()">
+      <div class="uz-icon">📋</div>
+      <div class="uz-label">Dotknij, aby dodać grafiki</div>
+      <div class="uz-hint">DOCX, XLSX, PDF, TXT, CSV lub screen/zdjęcie</div>
+    </div>
+
+    <div class="file-list" id="harm-file-list"></div>
+    <div class="harm-preview" id="harm-preview" style="display:none"></div>
+  </div>
+
+  <div id="harm-loaded" style="display:none">
+    <button class="section-toggle" type="button" data-accordion-target="harm-query-card" onclick="toggleAccordion('harm-query-card')" data-default="open">
+      <span class="st-main">🔍 Zapytaj o wychowawcę</span><span class="st-state">Zwiń</span>
+    </button>
+    <div class="card card-body collapsible-card accordion-panel" id="harm-query-card">
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="text" id="wych-input" placeholder="Imię i nazwisko wychowawcy..."
+          style="flex:1;border:2px solid var(--border);border-radius:10px;padding:10px 13px;font-size:.9rem;font-family:inherit;outline:none;min-width:0"
+          onkeydown="if(event.key==='Enter')queryHarm()">
+        <button class="btn" style="margin-top:0;flex-shrink:0" onclick="queryHarm()">Szukaj</button>
+      </div>
+      <div class="chat-pills" id="harm-pills" style="margin-top:8px"></div>
+    </div>
+
+    <div id="harm-result" style="display:none">
+      <button class="section-toggle" type="button" data-accordion-target="harm-result-card" onclick="toggleAccordion('harm-result-card')" data-default="open">
+        <span class="st-main">📊 Wynik</span><span class="st-state">Zwiń</span>
+      </button>
+      <div class="wych-result collapsible-card accordion-panel" id="harm-result-card"><div id="harm-result-body"></div></div>
+    </div>
+
+    <div class="abox info" style="margin-top:4px">
+      <span class="ai">🔒</span>
+      <div style="font-size:.75rem">Lokalny asystent może podsumować odczytany tekst. Nie wysyła grafiku ani nazwisk poza urządzenie.</div>
+    </div>
+    <button class="btn qblue" style="width:100%;margin-top:4px" onclick="sendHarmToAI()">🔎 Zapytaj lokalnego asystenta</button>
+  </div>
+
+</div><!-- /s-harm -->
+
+</div><!-- /main-wrap -->
+
+<div class="install-sheet" id="install-sheet" onclick="closeInstallHelp(event)">
+  <div class="install-panel" onclick="event.stopPropagation()">
+    <h2>Instalacja aplikacji</h2>
+    <div class="install-steps" id="install-steps"></div>
+    <button class="install-close" type="button" onclick="closeInstallHelp()">Zamknij</button>
+  </div>
+</div>
+
+<div class="image-viewer" id="image-viewer" onclick="closeImageViewer(event)">
+  <img id="image-viewer-img" alt="Podgląd harmonogramu">
+  <div class="image-tools" onclick="event.stopPropagation()">
+    <button type="button" onclick="zoomImage(0.25)">+</button>
+    <button type="button" onclick="zoomImage(-0.25)">-</button>
+    <button type="button" onclick="closeImageViewer()">Zamknij</button>
+  </div>
+</div>
+
+<div class="update-toast" id="update-toast" hidden>
+  <div>
+    <strong>Dostępna nowa wersja</strong>
+    <span>Odśwież aplikację, żeby wczytać poprawki.</span>
+  </div>
+  <button type="button" id="update-apply-btn">Odśwież</button>
+  <button type="button" class="update-later" onclick="document.getElementById('update-toast').hidden = true">Później</button>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="nav('s-dyzur',this)">
+    <span class="ni">🏠</span><span class="nl">Dyżur</span>
+  </button>
+  <button class="nav-btn" onclick="nav('s-proc',this)">
+    <span class="ni">📋</span><span class="nl">Procedury</span>
+  </button>
+  <button class="nav-btn" onclick="nav('s-stop',this)">
+    <span class="ni">📊</span><span class="nl">Stopnie</span>
+  </button>
+  <button class="nav-btn" onclick="nav('s-prawo',this)">
+    <span class="ni">⚖️</span><span class="nl">Prawo</span>
+  </button>
+  <button class="nav-btn" onclick="nav('s-info',this)">
+    <span class="ni">📣</span><span class="nl">Inf.</span>
+  </button>
+  <button class="nav-btn" onclick="nav('s-harm',this)">
+    <span class="ni">📁</span><span class="nl">Harmonogram</span>
+  </button>
+  <button class="nav-btn" onclick="setAIContextScope('general');nav('s-ai',this)">
+    <span class="ni">🔎</span><span class="nl">Asystent</span>
+  </button>
+</nav>
+
+<!-- DETAIL OVERLAY -->
+<div class="detail-view" id="detail-view">
+  <div class="det-hdr">
+    <button class="det-back" onclick="closeDetail()">←</button>
+    <div>
+      <div class="det-title"  id="det-title">Procedura</div>
+      <div class="det-source" id="det-source"></div>
+    </div>
+  </div>
+  <div class="det-body" id="det-body"></div>
+</div>
+
+<!-- ═══════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════ -->
+
+<!-- NOTATNIK – osobny ekran, dodany jako 6-ta zakładka via overlay w nav -->
+<!-- Notatnik dostępny jako overlay z bottom sheet -->
+
+<!-- floating notatnik button -->
+<button class="nota-fab" onclick="openNota()" style="
+  position:fixed; bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 10px); right:12px;
+  width:52px; height:52px; border-radius:50%;
+  background:var(--navy); color:#fff; border:none;
+  font-size:1.4rem; box-shadow:0 4px 16px rgba(26,58,92,.4);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer; z-index:80;">📝</button>
+
+<div class="nota-sheet" id="nota-sheet" onclick="closeNota(event)">
+  <div class="nota-inner" onclick="event.stopPropagation()">
+    <div class="nota-drag"></div>
+    <div class="card-hdr" style="border-radius:10px;margin-bottom:12px">📝 Notatnik dyżuru</div>
+    <textarea class="nota-area" id="note-input" placeholder="Zapisz zdarzenia z dyżuru...&#10;&#10;Np. 18:20 – Kowalski J. wrócił z przepustki, bez zastrzeżeń."></textarea>
+    <div class="btn-row">
+      <button class="btn" onclick="saveNote()">💾 Zapisz</button>
+      <button class="btn sec" onclick="document.getElementById('note-input').value=''">🗑 Wyczyść</button>
+    </div>
+    <div id="notes-list" style="margin-top:14px"></div>
+  </div>
+</div>
+
+
+</body>
+</html>

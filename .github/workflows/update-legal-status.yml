@@ -1,0 +1,35 @@
+name: Aktualizacja metadanych prawa
+
+on:
+  schedule:
+    - cron: '15 5 * * 1,4'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: legal-status-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pobierz urzędowe metadane ELI
+        run: node scripts/update-legal-status.mjs
+      - name: Opublikuj zmiany
+        run: |
+          if git diff --quiet -- assets/data/legal-status.json; then
+            echo "Brak zmian do publikacji."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/legal-status.json
+          git commit -m "Aktualizuj urzędowe metadane prawa"
+          git push
