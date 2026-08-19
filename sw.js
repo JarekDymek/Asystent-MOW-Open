@@ -1,4 +1,5 @@
-const CACHE = 'asmow-open-v11';
+const CACHE_PREFIX = 'asmow-open-';
+const CACHE = `${CACHE_PREFIX}v12`;
 const APP_SHELL = [
   './',
   './index.html',
@@ -104,7 +105,7 @@ self.addEventListener('message', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))
+      .then(keys => Promise.all(keys.filter(key => key !== CACHE && key.startsWith(CACHE_PREFIX)).map(key => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
@@ -116,23 +117,25 @@ self.addEventListener('fetch', event => {
 
   if (url.origin === self.location.origin && url.pathname.endsWith('/assets/data/legal-status.json')) {
     event.respondWith(
-      fetch(req, { cache: 'no-store' }).then(response => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const copy = response.clone();
-        caches.open(CACHE).then(cache => cache.put(req, copy));
-        return response;
-      }).catch(() => caches.match(req))
+      caches.open(CACHE).then(cache =>
+        fetch(req, { cache: 'no-store' }).then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          cache.put(req, response.clone());
+          return response;
+        }).catch(() => cache.match(req))
+      )
     );
     return;
   }
 
   event.respondWith(
-    caches.match(req).then(cached => cached || fetch(req).then(response => {
-      if (response && response.ok && url.origin === self.location.origin) {
-        const copy = response.clone();
-        caches.open(CACHE).then(cache => cache.put(req, copy));
-      }
-      return response;
-    }).catch(() => cached))
+    caches.open(CACHE).then(cache =>
+      cache.match(req).then(cached => cached || fetch(req).then(response => {
+        if (response && response.ok && url.origin === self.location.origin) {
+          cache.put(req, response.clone());
+        }
+        return response;
+      }).catch(() => cached))
+    )
   );
 });
