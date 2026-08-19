@@ -67,6 +67,9 @@ if (!legalUpdater.includes('https://api.sejm.gov.pl/eli/acts/')) {
 if (!serviceWorker.includes("url.pathname.endsWith('/assets/data/legal-status.json')")) {
   throw new Error('PWA nie ma odświeżania sieciowego rejestru prawa.');
 }
+if (!serviceWorker.includes("new Request(path, { cache: 'reload' })")) {
+  throw new Error('Instalacja PWA nie wymusza pobrania spójnego, świeżego pakietu plików.');
+}
 if (!spreadsheetLibrary.includes('0.20.3')) {
   throw new Error('Lokalny parser Excela nie ma bezpieczniejszej wersji SheetJS 0.20.3.');
 }

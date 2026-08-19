@@ -1,4 +1,4 @@
-const CACHE = 'asmow-open-v10';
+const CACHE = 'asmow-open-v11';
 const APP_SHELL = [
   './',
   './index.html',
@@ -89,8 +89,11 @@ const APP_SHELL = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE)
-      .then(cache => cache.addAll(APP_SHELL))
+    caches.open(CACHE).then(cache => Promise.all(APP_SHELL.map(async path => {
+      const response = await fetch(new Request(path, { cache: 'reload' }));
+      if (!response.ok) throw new Error(`Nie udało się odświeżyć ${path}: HTTP ${response.status}`);
+      await cache.put(path, response);
+    })))
   );
 });
 
