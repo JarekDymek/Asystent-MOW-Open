@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-08-31T11:33:40.098Z",
+  "checkedAt": "2026-09-03T09:42:19.449Z",
   "source": "API ELI Sejmu RP - urzędowe metadane aktów prawnych",
   "sourceDocumentation": "https://api.sejm.gov.pl/eli_pl.html",
   "partial": false,
@@ -86,6 +86,21 @@
   ],
   "candidates": [
     {
+      "eli": "DU/2026/1036",
+      "displayAddress": "Dz.U. 2026 poz. 1036",
+      "title": "Ustawa z dnia 3 lipca 2026 r. o zmianie ustawy - Prawo oświatowe",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-08-04T11:29:51",
+      "promulgation": "2026-08-03",
+      "entryIntoForce": "2026-09-01",
+      "url": "https://eli.gov.pl/eli/DU/2026/1036/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2026/820"
+      ]
+    },
+    {
       "eli": "DU/2026/982",
       "displayAddress": "Dz.U. 2026 poz. 982",
       "title": "Ustawa z dnia 29 maja 2026 r. o zmianie ustawy o drogach publicznych oraz niektórych innych ustaw",
@@ -95,6 +110,21 @@
       "promulgation": "2026-07-22",
       "entryIntoForce": "2026-09-21",
       "url": "https://eli.gov.pl/eli/DU/2026/982/ogl",
+      "relation": "Nowelizacje po tekście jednolitym",
+      "relatedTo": [
+        "DU/2026/820"
+      ]
+    },
+    {
+      "eli": "DU/2026/904",
+      "displayAddress": "Dz.U. 2026 poz. 904",
+      "title": "Ustawa z dnia 29 maja 2026 r. o zmianie ustawy - Prawo oświatowe",
+      "status": "obowiązujący",
+      "inForce": "IN_FORCE",
+      "changeDate": "2026-07-13T10:03:32",
+      "promulgation": "2026-07-06",
+      "entryIntoForce": "2026-09-01",
+      "url": "https://eli.gov.pl/eli/DU/2026/904/ogl",
       "relation": "Nowelizacje po tekście jednolitym",
       "relatedTo": [
         "DU/2026/820"
