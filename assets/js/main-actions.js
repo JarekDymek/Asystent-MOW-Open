@@ -21,7 +21,6 @@ function getNavIndexForScreen(screen) {
     's-stop': 3,
     's-prawo': 4,
     's-info': 5,
-    's-harm': 6,
-    's-ai': 7
+    's-ai': 6
   }[screen] || 1;
 }

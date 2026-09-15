@@ -4,7 +4,7 @@ Prywatna, instalowalna aplikacja PWA dla wychowawców młodzieżowych ośrodków
 
 ## Uruchomienie i instalacja
 
-Po publikacji aplikacja będzie dostępna pod adresem:
+Aplikacja i instalacja PWA:
 
 **https://jarekdymek.github.io/Asystent-MOW-Open/**
 
@@ -22,7 +22,6 @@ Instalacja nie wymaga konta, tokenu ani konfiguracji informatycznej.
 - automatyczną kontrolę metadanych monitorowanych aktów w oficjalnym ELI dwa razy w tygodniu;
 - kontrolowany bank 250 odpowiedzi oraz lokalne wyszukiwanie intencji;
 - lokalny import wiadomości `.eml`, dokumentów `.docx`, `.xlsx`, `.xls`, `.pdf`, `.txt`, `.csv` i obrazów;
-- odczyt grafików internatu i wyszukiwanie dyżurów według nazwiska oraz tygodnia;
 - zaszyfrowaną kopię `.asmow` i bezpośrednią synchronizację dwóch urządzeń w tej samej sieci.
 
 ## Prywatność
@@ -68,3 +67,9 @@ Automat można też uruchomić ręcznie poleceniem `npm run legal:update` albo z
 Aplikacja zawiera lokalne kopie bibliotek open source: Mammoth, SheetJS, PDF.js, PostalMime, jsQR i qrcode-generator. Ich licencje pozostają własnością autorów tych projektów.
 
 Wersje, zastosowania i pełne informacje: [docs/BIBLIOTEKI.md](docs/BIBLIOTEKI.md).
+
+## Aktualizacja 15 września 2026 — oddzielne aplikacje
+
+Usunięto zakładkę Grafik/Harmonogram, jej moduły oraz inicjalizację. Dokumenty źródłowe pozostają dostępne w Info. Service worker obsługuje wyłącznie katalog tej aplikacji.
+
+Uruchomienie i instalacja: [Asystent-MOW-Open](https://jarekdymek.github.io/Asystent-MOW-Open/). Instaluj z tego adresu, używając przycisku aplikacji lub menu przeglądarki. Jeśli stary skrót otwiera inny projekt, usuń ten skrót i zainstaluj właściwą aplikację z powyższego adresu bez czyszczenia danych witryny.

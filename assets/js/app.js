@@ -11,8 +11,6 @@ async function init() {
   renderChatPills();
   await loadChatHistory();
   loadChatDraft();
-  await loadInternatScheduleIndexFromDb();
-  await loadWeeklyPlanState();
   await loadKnowledgeBase();
   loadCentralKnowledgeCache();
   renderKnowledgeList();

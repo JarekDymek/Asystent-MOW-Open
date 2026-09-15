@@ -116,7 +116,7 @@ if ('serviceWorker' in navigator) {
     window.location.reload();
   });
 
-  navigator.serviceWorker.register('./sw.js', { scope: './' })
+  navigator.serviceWorker.register('./sw.js', { scope: './', updateViaCache: 'none' })
     .then(reg => {
       setupServiceWorkerUpdate(reg);
       setInterval(() => reg.update().catch(()=>{}), 60 * 60 * 1000);

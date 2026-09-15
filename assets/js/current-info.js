@@ -277,7 +277,6 @@ async function importCurrentInfoFile(input) {
   setCurrentInfoStatus('Odczytuję wiadomości i dokumenty lokalnie...');
   const summary = await OpenDocumentImport.importFiles(files, { preferredType: files.some(file => /\.eml$/i.test(file.name)) ? '' : 'currentInfo' });
   const parts = [`Dodano ${summary.information} informacji`];
-  if (summary.schedules) parts.push(`${summary.schedules} grafików przekazano do Harmonogramu`);
   if (summary.knowledge) parts.push(`${summary.knowledge} dokumentów dodano do bazy wiedzy`);
   if (summary.errors.length) parts.push(`błędy: ${summary.errors.join('; ')}`);
   setCurrentInfoStatus(`${parts.join(', ')}. Pliki nie opuściły urządzenia.`);

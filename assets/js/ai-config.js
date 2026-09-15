@@ -4,7 +4,7 @@ const CHAT_META_KEY = 'open-chat-history-v1';
 let currentAIScope = 'general';
 
 function setAIContextScope(scope = 'general') {
-  const allowed = ['general', 'procedury', 'stopnie', 'prawo', 'harmonogram', 'info'];
+  const allowed = ['general', 'procedury', 'stopnie', 'prawo', 'info'];
   currentAIScope = allowed.includes(scope) ? scope : 'general';
   const label = document.getElementById('ai-scope-label');
   if (!label) return;
@@ -13,7 +13,6 @@ function setAIContextScope(scope = 'general') {
     procedury: 'Procedury MOW',
     stopnie: 'Stopnie uspołecznienia',
     prawo: 'Prawo i baza wiedzy',
-    harmonogram: 'Harmonogram',
     info: 'Bieżące informacje'
   };
   label.textContent = names[currentAIScope];

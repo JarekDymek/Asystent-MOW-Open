@@ -139,10 +139,7 @@
 
   async function importParsedDocument(parsed, storedFile, options = {}) {
     const classification = options.preferredType || classifyDocument(parsed.name, parsed.text);
-    if (classification === 'schedule') {
-      const schedule = await saveScheduleDocument(parsed, storedFile, options);
-      return { schedules: schedule ? 1 : 0 };
-    }
+
     if (classification === 'currentInfo') {
       await saveInformationDocument(parsed, storedFile, options);
       return { information: 1 };
@@ -172,13 +169,7 @@
       try {
         const attachmentParsed = await parseFile(attachmentFile);
         const classification = classifyDocument(attachmentParsed.name, `${message.subject || ''} ${attachmentParsed.text || ''}`);
-        if (classification === 'schedule') {
-          if (await saveScheduleDocument(attachmentParsed, storedAttachment, {
-            sourceTitle: message.subject,
-            sourceDate: normalizeOpenDate(message.date),
-            sourceMessageFileId: storedFile.id
-          })) schedules += 1;
-        } else if (classification === 'knowledge') {
+        if (classification === 'knowledge') {
           await saveKnowledgeDocument(attachmentParsed, storedAttachment, { sourceTitle: message.subject });
           knowledge += 1;
         }
@@ -202,51 +193,6 @@
       return { schedules, knowledge, information: 1 };
     }
     return { schedules, knowledge, information: 0 };
-  }
-
-  async function saveScheduleDocument(parsed, storedFile, options = {}) {
-    if (!parsed.html || !window.OpenScheduleParser) {
-      await OpenData.putRecord({
-        id: `schedule-${storedFile.hash.slice(0, 24)}`,
-        type: 'scheduleDocument',
-        hash: storedFile.hash,
-        payload: {
-          id: `schedule-${storedFile.hash.slice(0, 24)}`,
-          weekStart: window.OpenScheduleParser?.extractWeekStart(`${parsed.name} ${parsed.text}`) || '',
-          sourceTitle: options.sourceTitle || parsed.name,
-          sourceAttachment: parsed.name,
-          sourceDate: options.sourceDate || new Date().toISOString().slice(0, 10),
-          sourceFileId: storedFile.id,
-          scheduleKind: 'unknown',
-          isCorrection: /korekt|zmian/i.test(`${parsed.name} ${options.sourceTitle || ''}`),
-          ambiguous: true,
-          warning: parsed.kind === 'image' ? 'Obraz zapisano bez automatycznego odczytu treści.' : 'Nie udało się odczytać tabeli grafiku.',
-          records: [],
-          text: parsed.text || ''
-        }
-      });
-      return false;
-    }
-    const source = {
-      sourceMailUid: options.sourceMessageFileId || storedFile.id,
-      sourceTitle: options.sourceTitle || parsed.name,
-      sourceAttachment: parsed.name,
-      sourceDate: options.sourceDate || new Date().toISOString().slice(0, 10)
-    };
-    const extracted = window.OpenScheduleParser.parseHtml(parsed.html, source);
-    const payload = {
-      id: `schedule-${storedFile.hash.slice(0, 24)}`,
-      ...extracted,
-      ...source,
-      sourceAttachmentId: storedFile.id,
-      sourceFileId: storedFile.id,
-      indexedAt: new Date().toISOString(),
-      scheduleKind: window.OpenScheduleParser.classifyKind(`${source.sourceTitle} ${source.sourceAttachment}`),
-      isCorrection: /korekt|zmian/i.test(`${source.sourceTitle} ${source.sourceAttachment}`),
-      text: parsed.text || ''
-    };
-    await OpenData.putRecord({ id: payload.id, type: 'scheduleDocument', hash: storedFile.hash, payload });
-    return payload.records.length > 0;
   }
 
   async function saveInformationDocument(parsed, storedFile, options = {}) {
@@ -283,7 +229,7 @@
 
   function classifyDocument(name = '', text = '') {
     const signature = normalizeOpenSearch(`${name} ${text.slice(0, 5000)}`);
-    if (isScheduleText(signature)) return 'schedule';
+    if (isScheduleText(signature)) return 'currentInfo';
     if (/ustawa|rozporzadzenie|regulamin|statut|standardy ochrony|procedur|zarzadzenie/.test(signature)) return 'knowledge';
     if (/dyrektor|komunikat|rada pedagogiczna|termin|spotkanie|informacja|urlop|wydarzenie/.test(signature)) return 'currentInfo';
     return 'knowledge';
@@ -374,7 +320,6 @@
 
   async function refreshOpenViews() {
     if (typeof loadCurrentInfo === 'function') await loadCurrentInfo();
-    if (typeof loadInternatScheduleIndexFromDb === 'function') await loadInternatScheduleIndexFromDb();
     if (typeof loadKnowledgeBase === 'function') await loadKnowledgeBase();
     if (typeof renderKnowledgeList === 'function') renderKnowledgeList();
   }

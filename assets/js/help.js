@@ -19,7 +19,6 @@ function openHelp() {
         <ul>
           <li>Nie wymaga konta, klucza API ani tokenów AI.</li>
           <li>Pytania są analizowane na urządzeniu z użyciem banku 250 odpowiedzi, procedur, prawa i lokalnych dokumentów.</li>
-          <li>Treść pytań, wiadomości i grafików nie jest wysyłana do modelu AI ani na Render.</li>
           <li>Przy braku pewnego dopasowania asystent dopytuje albo wskazuje dokument do samodzielnego sprawdzenia.</li>
         </ul>
       </div>
@@ -41,14 +40,11 @@ function openHelp() {
           <li>W zakładce Inf. wybierz „Importuj wiadomość lub dokument”.</li>
           <li>Obsługiwane są EML, DOCX, XLSX, PDF, TXT, CSV i obrazy. Stary DOC zapisz najpierw jako DOCX albo PDF.</li>
           <li>Pliki można otwierać i pobierać z lokalnego archiwum.</li>
-          <li>Grafik znaleziony w EML zostanie przekazany również do zakładki Harmonogram.</li>
         </ul>
       </div>
 
       <div class="help-card">
-        <h3>Harmonogram</h3>
         <ul>
-          <li>Dodaj pliki grafików DOCX lub XLSX. Oryginały pozostają na urządzeniu.</li>
           <li>Wpisz nazwisko, aby wyświetlić poprzedni, bieżący i dostępne przyszłe tygodnie.</li>
           <li>Dyżur nocny przekraczający północ jest pokazywany jako dwa odcinki w dwóch kolejnych dniach.</li>
           <li>Przy ostrzeżeniu o niejednoznacznym odczycie zawsze porównaj wynik z plikiem źródłowym.</li>

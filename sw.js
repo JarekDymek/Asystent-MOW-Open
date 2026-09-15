@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'asmow-open-';
-const CACHE = `${CACHE_PREFIX}v12`;
+const CACHE = `${CACHE_PREFIX}v13`;
 const APP_SHELL = [
   './',
   './index.html',
@@ -49,7 +49,6 @@ const APP_SHELL = [
   './assets/js/state.js',
   './assets/js/utils.js',
   './assets/js/files.js',
-  './assets/js/schedule-parser.js',
   './assets/js/document-import.js',
   './assets/js/accordion.js',
   './assets/js/navigation.js',
@@ -69,8 +68,6 @@ const APP_SHELL = [
   './assets/js/ai-chat.js',
   './assets/js/ai-voice.js',
   './assets/js/tab-ai.js',
-  './assets/js/harmonogram.js',
-  './assets/js/weekly-plan.js',
   './assets/js/knowledge-storage.js',
   './assets/js/knowledge-list.js',
   './assets/js/knowledge-form.js',
@@ -114,6 +111,8 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
+  const scope = new URL(self.registration.scope);
+  if (url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname) || req.cache === 'no-store') return;
 
   if (url.origin === self.location.origin && url.pathname.endsWith('/assets/data/legal-status.json')) {
     event.respondWith(

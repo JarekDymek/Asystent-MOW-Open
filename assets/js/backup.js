@@ -122,7 +122,6 @@ async function decompressOpenBytes(bytes, compressed) {
 
 async function refreshOpenDataViews() {
   await loadCurrentInfo();
-  await loadInternatScheduleIndexFromDb();
   await loadKnowledgeBase();
   renderKnowledgeList();
   await loadChatHistory();

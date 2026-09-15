@@ -40,7 +40,6 @@
   <script src="assets/js/state.js" defer></script>
   <script src="assets/js/utils.js" defer></script>
   <script src="assets/js/files.js" defer></script>
-  <script src="assets/js/schedule-parser.js" defer></script>
   <script src="assets/js/document-import.js" defer></script>
   <script src="assets/js/accordion.js" defer></script>
   <script src="assets/js/navigation.js" defer></script>
@@ -59,8 +58,6 @@
   <script src="assets/js/ai-chat.js" defer></script>
   <script src="assets/js/ai-voice.js" defer></script>
   <script src="assets/js/tab-ai.js" defer></script>
-  <script src="assets/js/harmonogram.js" defer></script>
-  <script src="assets/js/weekly-plan.js" defer></script>
   <script src="assets/js/knowledge-storage.js" defer></script>
 <script src="assets/js/knowledge-list.js" defer></script>
   <script src="assets/js/knowledge-form.js" defer></script>
@@ -202,7 +199,7 @@
     </div>
 
     <div class="chat-window" id="chat-window">
-      <div class="msg ai">Jestem lokalnym asystentem MOW Open. Nie korzystam z zewnętrznego modelu ani tokenów. Zapytaj o procedurę, stopień, prawo, wiadomość dyrekcji lub lokalny grafik.</div>
+      <div class="msg ai">Jestem lokalnym asystentem MOW Open. Nie korzystam z zewnętrznego modelu ani tokenów. Zapytaj o procedurę, stopień, prawo, wiadomość dyrekcji lub dokument.</div>
     </div>
 
     <p class="sec-title" style="margin-top:8px">💡 Szybkie pytania</p>
@@ -461,7 +458,7 @@
       <button class="btn sec" type="button" onclick="clearCurrentInfoForm()">Wyczyść</button>
       <button class="btn qblue" type="button" onclick="askAIAboutCurrentInfo()">Zapytaj asystenta</button>
     </div>
-    <div class="current-info-status" id="current-info-status">Plik EML może automatycznie przekazać znaleziony grafik do zakładki Harmonogram.</div>
+    <div class="current-info-status" id="current-info-status">Pliki i załączniki pozostają dostępne lokalnie w zakładce Info.</div>
   </div></div>
 
   <button class="section-toggle" type="button" data-accordion-target="current-info-list-card" onclick="toggleAccordion('current-info-list-card')" data-default="open">
@@ -476,94 +473,7 @@
   </div>
 </div><!-- /s-info -->
 
-<!-- ════════════ HARMONOGRAM ════════════ -->
-<div class="screen tile-screen" id="s-harm">
 
-  <div class="abox info" style="margin-bottom:10px">
-    <span class="ai">📁</span>
-    <div style="font-size:.92rem"><strong>Lokalny harmonogram:</strong> dodaj DOCX, Excel, tekst, PDF albo zdjęcie. Plik nie jest wysyłany do Internetu.</div>
-  </div>
-
-  <div class="weekly-grid" id="weekly-plan"></div>
-
-  <div class="card card-body" style="margin-bottom:10px">
-    <div style="font-weight:900;margin-bottom:8px">📅 Zapytaj o grafik internatu</div>
-    <label class="internat-week-field" for="internat-schedule-week">
-      <span>Tydzień grafiku</span>
-      <select id="internat-schedule-week" onchange="changeInternatScheduleWeek()" aria-label="Wybierz tydzień grafiku"></select>
-    </label>
-    <div class="internat-schedule-query">
-      <input id="internat-schedule-question" type="text" placeholder="Nazwisko, np. Dembiński"
-        onkeydown="if(event.key==='Enter')queryInternatSchedule()">
-      <button class="btn" type="button" onclick="queryInternatSchedule()">Sprawdź</button>
-    </div>
-    <div class="weekly-status" id="internat-schedule-index-status" style="margin-top:8px" aria-live="polite">Sprawdzam indeks grafików...</div>
-    <div class="weekly-status" id="internat-schedule-result" style="display:none;margin-top:8px" aria-live="polite"></div>
-  </div>
-
-  <input type="file" id="harm-file-input"
-    accept=".txt,.csv,.tsv,.doc,.docx,.xls,.xlsx,.pdf,image/*" multiple
-    style="display:none" onchange="handleHarmFile(this)">
-
-  <button class="section-toggle" type="button" data-accordion-target="weekly-settings-card" onclick="toggleAccordion('weekly-settings-card')">
-    <span class="st-main">🗓️ Mój plan z lokalnych grafików</span><span class="st-state">Rozwiń</span>
-  </button>
-
-  <button class="section-toggle" type="button" data-accordion-target="harm-upload-card" onclick="toggleAccordion('harm-upload-card')">
-    <span class="st-main">📋 Dodaj pliki grafików lub screeny</span><span class="st-state">Rozwiń</span>
-  </button>
-
-  <div class="card collapsible-card accordion-panel" id="weekly-settings-card"><div class="card-body">
-    <div class="weekly-settings">
-      <input id="weekly-educator" type="text" placeholder="Moje nazwisko, np. Dymek" onkeydown="if(event.key==='Enter')fetchWeeklyPlan()">
-    </div>
-    <div class="btn-row">
-      <button class="btn" type="button" onclick="fetchWeeklyPlan()">Pokaż mój plan</button>
-      <button class="btn qblue" type="button" onclick="askAIAboutWeeklyPlan()">Podsumuj lokalnie</button>
-    </div>
-    <div class="weekly-status" id="weekly-status">Dodaj pliki grafików, wpisz nazwisko i wybierz „Pokaż mój plan”.</div>
-  </div></div>
-
-  <div class="collapsible-card accordion-panel" id="harm-upload-card">
-    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('harm-file-input').click()">
-      <div class="uz-icon">📋</div>
-      <div class="uz-label">Dotknij, aby dodać grafiki</div>
-      <div class="uz-hint">DOCX, XLSX, PDF, TXT, CSV lub screen/zdjęcie</div>
-    </div>
-
-    <div class="file-list" id="harm-file-list"></div>
-    <div class="harm-preview" id="harm-preview" style="display:none"></div>
-  </div>
-
-  <div id="harm-loaded" style="display:none">
-    <button class="section-toggle" type="button" data-accordion-target="harm-query-card" onclick="toggleAccordion('harm-query-card')" data-default="open">
-      <span class="st-main">🔍 Zapytaj o wychowawcę</span><span class="st-state">Zwiń</span>
-    </button>
-    <div class="card card-body collapsible-card accordion-panel" id="harm-query-card">
-      <div style="display:flex;gap:8px;align-items:center">
-        <input type="text" id="wych-input" placeholder="Imię i nazwisko wychowawcy..."
-          style="flex:1;border:2px solid var(--border);border-radius:10px;padding:10px 13px;font-size:.9rem;font-family:inherit;outline:none;min-width:0"
-          onkeydown="if(event.key==='Enter')queryHarm()">
-        <button class="btn" style="margin-top:0;flex-shrink:0" onclick="queryHarm()">Szukaj</button>
-      </div>
-      <div class="chat-pills" id="harm-pills" style="margin-top:8px"></div>
-    </div>
-
-    <div id="harm-result" style="display:none">
-      <button class="section-toggle" type="button" data-accordion-target="harm-result-card" onclick="toggleAccordion('harm-result-card')" data-default="open">
-        <span class="st-main">📊 Wynik</span><span class="st-state">Zwiń</span>
-      </button>
-      <div class="wych-result collapsible-card accordion-panel" id="harm-result-card"><div id="harm-result-body"></div></div>
-    </div>
-
-    <div class="abox info" style="margin-top:4px">
-      <span class="ai">🔒</span>
-      <div style="font-size:.75rem">Lokalny asystent może podsumować odczytany tekst. Nie wysyła grafiku ani nazwisk poza urządzenie.</div>
-    </div>
-    <button class="btn qblue" style="width:100%;margin-top:4px" onclick="sendHarmToAI()">🔎 Zapytaj lokalnego asystenta</button>
-  </div>
-
-</div><!-- /s-harm -->
 
 </div><!-- /main-wrap -->
 
@@ -575,14 +485,7 @@
   </div>
 </div>
 
-<div class="image-viewer" id="image-viewer" onclick="closeImageViewer(event)">
-  <img id="image-viewer-img" alt="Podgląd harmonogramu">
-  <div class="image-tools" onclick="event.stopPropagation()">
-    <button type="button" onclick="zoomImage(0.25)">+</button>
-    <button type="button" onclick="zoomImage(-0.25)">-</button>
-    <button type="button" onclick="closeImageViewer()">Zamknij</button>
-  </div>
-</div>
+
 
 <div class="update-toast" id="update-toast" hidden>
   <div>
@@ -610,10 +513,7 @@
   <button class="nav-btn" onclick="nav('s-info',this)">
     <span class="ni">📣</span><span class="nl">Inf.</span>
   </button>
-  <button class="nav-btn" onclick="nav('s-harm',this)">
-    <span class="ni">📁</span><span class="nl">Harmonogram</span>
-  </button>
-  <button class="nav-btn" onclick="setAIContextScope('general');nav('s-ai',this)">
+<button class="nav-btn" onclick="setAIContextScope('general');nav('s-ai',this)">
     <span class="ni">🔎</span><span class="nl">Asystent</span>
   </button>
 </nav>

@@ -41,10 +41,7 @@
     const urgent = matchProcedure(contextQuestion, true);
     if (urgent) return formatProcedureAnswer(urgent, true);
 
-    if (scope === 'harmonogram' || /grafik|harmonogram|dyzur|pracuje|praca w tygodniu/.test(normalized)) {
-      const schedule = answerSchedule(contextQuestion);
-      if (schedule) return schedule;
-    }
+
 
     const bank = typeof resolveAnswerBankIntent === 'function' ? resolveAnswerBankIntent(contextQuestion) : null;
     if (bank?.type === 'answer') {
@@ -104,21 +101,6 @@
     return { text: sections.join('\n'), sources: [strip(item.src || 'Procedury MOW')], confidence: Math.min(0.98, 0.55 + match.score * 0.08), kind: 'procedure' };
   }
 
-  function answerSchedule(question) {
-    if (typeof getInternatScheduleAnswer !== 'function') return null;
-    const index = loadInternatScheduleIndex();
-    if (!index.length) return { text: '**Brak lokalnych grafików.**\nDodaj plik DOCX lub XLSX w zakładce Harmonogram.', sources: [], confidence: 1, kind: 'schedule' };
-    const selected = getSelectedInternatScheduleWeekStart(new Date());
-    const requested = resolveInternatScheduleQueryWeek(question, selected, new Date());
-    const result = getInternatScheduleAnswer(question, index, new Date(), requested);
-    if (result.status === 'ambiguous') return clarification('Znalazłem kilka podobnych nazwisk. Podaj pełne nazwisko i wybierz tydzień w zakładce Harmonogram.');
-    if (result.status !== 'ok') return { text: `Nie znaleziono dyżurów tej osoby w lokalnym grafiku na tydzień ${formatInternatScheduleWeek(requested)}. Sprawdź pisownię albo plik źródłowy.`, sources: result.sources?.map(sourceName) || [], confidence: 0.9, kind: 'schedule' };
-    const rows = result.records.map(record => `- ${formatInternatScheduleDate(record.date)}: ${record.from}–${record.to}${record.group ? `, grupa ${record.group}` : ''}`);
-    return {
-      text: [`**${result.employee}**`, `Tydzień ${formatInternatScheduleWeek(result.weekStart)}:`, ...rows, result.requiresVerification ? '\n**Uwaga:** część danych wymaga porównania z plikiem źródłowym.' : ''].filter(Boolean).join('\n'),
-      sources: result.sources?.map(sourceName) || [], confidence: 0.96, kind: 'schedule'
-    };
-  }
 
   function matchSocialLevel(question) {
     const normalized = normalize(question);
