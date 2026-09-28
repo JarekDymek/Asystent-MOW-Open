@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-09-24T09:56:20.128Z",
+  "checkedAt": "2026-09-28T11:38:55.077Z",
   "source": "API ELI Sejmu RP - urzędowe metadane aktów prawnych",
   "sourceDocumentation": "https://api.sejm.gov.pl/eli_pl.html",
   "partial": false,
@@ -65,9 +65,9 @@
       "eli": "DU/2025/277",
       "displayAddress": "Dz.U. 2025 poz. 277",
       "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 14 lutego 2025 r. w sprawie ogłoszenia jednolitego tekstu ustawy - Kodeks pracy",
-      "status": "obowiązujący",
-      "inForce": "IN_FORCE",
-      "changeDate": "2026-08-18T14:42:13",
+      "status": "wygaśnięcie aktu",
+      "inForce": "NOT_IN_FORCE",
+      "changeDate": "2026-09-25T08:18:02",
       "promulgation": "2025-03-06",
       "entryIntoForce": "",
       "url": "https://eli.gov.pl/eli/DU/2025/277/ogl"
@@ -158,81 +158,6 @@
       "relation": "Nowelizacje po tekście jednolitym",
       "relatedTo": [
         "DU/2026/244"
-      ]
-    },
-    {
-      "eli": "DU/2026/473",
-      "displayAddress": "Dz.U. 2026 poz. 473",
-      "title": "Ustawa z dnia 11 marca 2026 r. o zmianie ustawy o Państwowej Inspekcji Pracy oraz niektórych innych ustaw",
-      "status": "obowiązujący",
-      "inForce": "IN_FORCE",
-      "changeDate": "2026-04-10T10:52:58",
-      "promulgation": "2026-04-07",
-      "entryIntoForce": "2026-07-08",
-      "url": "https://eli.gov.pl/eli/DU/2026/473/ogl",
-      "relation": "Nowelizacje po tekście jednolitym",
-      "relatedTo": [
-        "DU/2025/277"
-      ]
-    },
-    {
-      "eli": "DU/2026/25",
-      "displayAddress": "Dz.U. 2026 poz. 25",
-      "title": "Ustawa z dnia 4 grudnia 2025 r. o zmianie ustawy - Kodeks pracy oraz ustawy o zakładowym funduszu świadczeń socjalnych",
-      "status": "obowiązujący",
-      "inForce": "IN_FORCE",
-      "changeDate": "2026-01-19T13:45:02",
-      "promulgation": "2026-01-12",
-      "entryIntoForce": "2026-01-27",
-      "url": "https://eli.gov.pl/eli/DU/2026/25/ogl",
-      "relation": "Nowelizacje po tekście jednolitym",
-      "relatedTo": [
-        "DU/2025/277"
-      ]
-    },
-    {
-      "eli": "DU/2025/1661",
-      "displayAddress": "Dz.U. 2025 poz. 1661",
-      "title": "Ustawa z dnia 5 listopada 2025 r. o układach zbiorowych pracy i porozumieniach zbiorowych",
-      "status": "obowiązujący",
-      "inForce": "IN_FORCE",
-      "changeDate": "2025-12-09T14:15:21",
-      "promulgation": "2025-11-28",
-      "entryIntoForce": "2025-12-13",
-      "url": "https://eli.gov.pl/eli/DU/2025/1661/ogl",
-      "relation": "Nowelizacje po tekście jednolitym",
-      "relatedTo": [
-        "DU/2025/277"
-      ]
-    },
-    {
-      "eli": "DU/2025/1423",
-      "displayAddress": "Dz.U. 2025 poz. 1423",
-      "title": "Ustawa z dnia 26 września 2025 r. o zmianie ustawy - Kodeks pracy oraz niektórych innych ustaw",
-      "status": "obowiązujący",
-      "inForce": "IN_FORCE",
-      "changeDate": "2025-10-24T09:15:24",
-      "promulgation": "2025-10-21",
-      "entryIntoForce": "2026-01-01",
-      "url": "https://eli.gov.pl/eli/DU/2025/1423/ogl",
-      "relation": "Nowelizacje po tekście jednolitym",
-      "relatedTo": [
-        "DU/2025/277"
-      ]
-    },
-    {
-      "eli": "DU/2025/807",
-      "displayAddress": "Dz.U. 2025 poz. 807",
-      "title": "Ustawa z dnia 4 czerwca 2025 r. o zmianie ustawy - Kodeks pracy",
-      "status": "obowiązujący",
-      "inForce": "IN_FORCE",
-      "changeDate": "2025-08-06T14:05:00",
-      "promulgation": "2025-06-23",
-      "entryIntoForce": "2025-12-24",
-      "url": "https://eli.gov.pl/eli/DU/2025/807/ogl",
-      "relation": "Nowelizacje po tekście jednolitym",
-      "relatedTo": [
-        "DU/2025/277"
       ]
     }
   ]
