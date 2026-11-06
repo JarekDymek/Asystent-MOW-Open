@@ -41,8 +41,10 @@ for (const required of [
 
 const manifest = JSON.parse(read('manifest.webmanifest'));
 if (manifest.name !== 'Asystent MOW Open') throw new Error('Manifest nie ma odrębnej nazwy wersji Open.');
-if (manifest.id !== './' || manifest.start_url !== './' || manifest.scope !== './') {
-  throw new Error('Manifest musi mieć względny identyfikator, start_url i scope dla GitHub Pages.');
+// Keep the identity of already installed copies while accepting portable builds.
+const appRoot = manifest.id;
+if (!['./', '/Asystent-MOW-Open/'].includes(appRoot) || manifest.start_url !== appRoot || manifest.scope !== appRoot) {
+  throw new Error('Manifest musi mieć spójny identyfikator, start_url i scope wersji Open.');
 }
 
 const db = read('assets/js/open-db.js');
