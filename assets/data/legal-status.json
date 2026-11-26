@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-11-23T15:54:30.869Z",
+  "checkedAt": "2026-11-26T15:04:52.581Z",
   "source": "API ELI Sejmu RP - urzędowe metadane aktów prawnych",
   "sourceDocumentation": "https://api.sejm.gov.pl/eli_pl.html",
   "partial": false,
@@ -45,7 +45,7 @@
       "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 12 czerwca 2026 r. w sprawie ogłoszenia jednolitego tekstu ustawy - Prawo oświatowe",
       "status": "obowiązujący",
       "inForce": "IN_FORCE",
-      "changeDate": "2026-10-26T10:02:14",
+      "changeDate": "2026-11-26T15:50:16",
       "promulgation": "2026-06-22",
       "entryIntoForce": "",
       "url": "https://eli.gov.pl/eli/DU/2026/820/ogl"
@@ -56,7 +56,7 @@
       "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 12 marca 2026 r. w sprawie ogłoszenia jednolitego tekstu ustawy - Karta Nauczyciela",
       "status": "obowiązujący",
       "inForce": "IN_FORCE",
-      "changeDate": "2026-10-26T10:02:14",
+      "changeDate": "2026-11-26T15:51:08",
       "promulgation": "2026-04-14",
       "entryIntoForce": "",
       "url": "https://eli.gov.pl/eli/DU/2026/515/ogl"
